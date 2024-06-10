@@ -13,3 +13,6 @@ Route::resource('pacientes',PacientesController::class);
 
 # CRUD Medicos
 Route::resource('medicos',MedicosController::class);
+
+# CRUD Atendimentos
+Route::resource('atendimentos',AtendimentosController::class);
