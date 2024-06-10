@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('atendimentos', function (Blueprint $table) {
             $table->id();
             $table->date('data_atendimento');
-            
+
             $table->foreignId('medico_id')->constrained(
                 table: 'medicos'
             )->onDelete("cascade");
-            
+
             $table->foreignId('paciente_id')->constrained(
                 table: 'pacientes'
             )->onDelete("cascade");
