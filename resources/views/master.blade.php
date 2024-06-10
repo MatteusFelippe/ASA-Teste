@@ -21,7 +21,7 @@
             <ul>
                 <li><a href="{{route('home')}}">Início</a></li>
                 <li><a href="{{route('pacientes.index')}}">Pacientes</a></li>
-                <li><a href="#">Médicos</a></li>
+                <li><a href="{{route('medicos.index')}}">Médicos</a></li>
                 <li><a href="#">Atendimentos</a></li>
             </ul>
         </nav>

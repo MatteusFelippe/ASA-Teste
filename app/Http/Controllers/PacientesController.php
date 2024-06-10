@@ -41,9 +41,9 @@ class PacientesController extends Controller
         ]);
 
         if ($created) {
-            return redirect()->route('pacientes.index')->with('message',value: 'Succesfully created');
+            return redirect()->route('pacientes.index')->with('message',value: 'Criado com sucesso');
         }
-        return redirect()->route('pacientes.index')->with('message',value: 'Erro on create');
+        return redirect()->route('pacientes.index')->with('message',value: 'Erro na criação');
     }
 
 
@@ -78,9 +78,9 @@ class PacientesController extends Controller
         ]);
     
         if ($updated) {
-            return redirect()->route('pacientes.index')->with('message',value: 'Succesfully updated');
+            return redirect()->route('pacientes.index')->with('message',value: 'Atualizado com sucesso');
         }
-        return redirect()->route('pacientes.index')->with('message',value: 'Erro on update');
+        return redirect()->route('pacientes.index')->with('message',value: 'Erro na atualização');
     }
 
     
@@ -92,7 +92,7 @@ class PacientesController extends Controller
         $paciente = Pacientes::find($id);
     if ($paciente) {
         $paciente->delete();
-        return redirect()->route('pacientes.index')->with('message', 'Paciente deletado com sucesso');
+        return redirect()->route('pacientes.index')->with('message', 'Paciente excluído com sucesso');
     } else {
         return redirect()->route('pacientes.index')->with('error', 'Paciente não encontrado');
     }
