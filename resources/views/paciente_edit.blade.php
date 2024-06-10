@@ -6,7 +6,19 @@
 <h2 style='display: flex; justify-content: space-between;'>Editar Paciente</h2>
 
 @if (session()->has('message'))
-    {{session()->get('message')}}
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
 @endif
 
 <form style='font-size:20px;' action="{{route('pacientes.update',['paciente' => $paciente->id])}}" method="post">

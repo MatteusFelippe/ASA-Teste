@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pacientes;
 use Illuminate\Http\Request;
+use App\Http\Requests\PacientesRequest;
 
 class PacientesController extends Controller
 {
@@ -31,19 +32,17 @@ class PacientesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PacientesRequest $request)
     {
-        $created = Pacientes::create([
-            'nome'=> $request->input('nome'),
-            'cpf'=> $request->input('cpf'),
-            'data_nascimento'=> $request->input('data_nascimento'),
-            'email'=> $request->input('email'),
-        ]);
-
+        // Recupera os dados validados
+        $validatedData = $request->validated();
+        // Cria o paciente usando os dados validados
+        $created = Pacientes::create($validatedData);
+        // Verifica se a criação foi bem-sucedida e redireciona com a mensagem apropriada
         if ($created) {
-            return redirect()->route('pacientes.index')->with('message',value: 'Criado com sucesso');
-        }
-        return redirect()->route('pacientes.index')->with('message',value: 'Erro na criação');
+            return redirect()->route('pacientes.index')->with('message', 'Criado com sucesso');
+        }        
+        return redirect()->route('pacientes.index')->with('message', 'Erro na criação');
     }
 
 
@@ -68,19 +67,17 @@ class PacientesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PacientesRequest $request, string $id)
     {
-        $updated = Pacientes::where('id', $id)->update([
-            'nome' => $request->input('nome'),
-            'cpf' => $request->input('cpf'),
-            'data_nascimento' => $request->input('data_nascimento'),
-            'email' => $request->input('email'),
-        ]);
-    
+        // Recupera os dados validados
+        $validatedData = $request->validated();
+        // Encontra o paciente pelo ID e atualiza com os dados validados
+        $updated = Pacientes::where('id', $id)->update($validatedData);
+        // Verifica se a atualização foi bem-sucedida e redireciona com a mensagem apropriada
         if ($updated) {
-            return redirect()->route('pacientes.index')->with('message',value: 'Atualizado com sucesso');
+            return redirect()->route('pacientes.index')->with('message', 'Atualizado com sucesso');
         }
-        return redirect()->route('pacientes.index')->with('message',value: 'Erro na atualização');
+        return redirect()->route('pacientes.index')->with('message', 'Erro na atualização');
     }
 
     
@@ -90,11 +87,11 @@ class PacientesController extends Controller
     public function destroy(string $id)
     {
         $paciente = Pacientes::find($id);
-    if ($paciente) {
-        $paciente->delete();
-        return redirect()->route('pacientes.index')->with('message', 'Paciente excluído com sucesso');
-    } else {
-        return redirect()->route('pacientes.index')->with('error', 'Paciente não encontrado');
-    }
+        if ($paciente) {
+            $paciente->delete();
+            return redirect()->route('pacientes.index')->with('message', 'Paciente excluído com sucesso');
+        } else {
+            return redirect()->route('pacientes.index')->with('error', 'Paciente não encontrado');
+        }
     }
 }

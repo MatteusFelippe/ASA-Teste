@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Medicos;
 use Illuminate\Http\Request;
+use App\Http\Requests\MedicosRequest;
 
 class MedicosController extends Controller
 {
@@ -31,18 +32,17 @@ class MedicosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MedicosRequest $request)
     {
-        $created = Medicos::create([
-            'nome'=> $request->input('nome'),
-            'crm'=> $request->input('crm'),
-            'especialidade'=> $request->input('especialidade'),
-        ]);
-
+        // Recupera os dados validados
+        $validatedData = $request->validated();
+        // Cria o medico usando os dados validados
+        $created = Medicos::create($validatedData);
+        // Verifica se a criação foi bem-sucedida e redireciona com a mensagem apropriada
         if ($created) {
-            return redirect()->route('medicos.index')->with('message',value: 'Criado com sucesso');
-        }
-        return redirect()->route('medicos.index')->with('message',value: 'Erro na criação');
+            return redirect()->route('medicos.index')->with('message', 'Criado com sucesso');
+        }        
+        return redirect()->route('medicos.index')->with('message', 'Erro na criação');
     }
 
 
@@ -67,18 +67,17 @@ class MedicosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(MedicosRequest $request, string $id)
     {
-        $updated = Medicos::where('id', $id)->update([
-            'nome' => $request->input('nome'),
-            'crm' => $request->input('crm'),
-            'especialidade' => $request->input('especialidade'),
-        ]);
-    
+       // Recupera os dados validados
+       $validatedData = $request->validated();
+       // Encontra o medico pelo ID e atualiza com os dados validados
+       $updated = Medicos::where('id', $id)->update($validatedData);
+        // Verifica se a atualização foi bem-sucedida e redireciona com a mensagem apropriada
         if ($updated) {
-            return redirect()->route('medicos.index')->with('message',value: 'Criado com sucesso');
+            return redirect()->route('medicos.index')->with('message', 'Atualizado com sucesso');
         }
-        return redirect()->route('medicos.index')->with('message',value: 'Erro na criação');
+        return redirect()->route('medicos.index')->with('message', 'Erro na atualização');
     }
 
     
@@ -88,11 +87,11 @@ class MedicosController extends Controller
     public function destroy(string $id)
     {
         $medico = Medicos::find($id);
-    if ($medico) {
-        $medico->delete();
-        return redirect()->route('medicos.index')->with('message', 'Médico excluído com sucesso');
-    } else {
-        return redirect()->route('medicos.index')->with('error', 'Médico não encontrado');
-    }
+        if ($medico) {
+            $medico->delete();
+            return redirect()->route('medicos.index')->with('message', 'Médico excluído com sucesso');
+        } else {
+            return redirect()->route('medicos.index')->with('error', 'Médico não encontrado');
+        }
     }
 }

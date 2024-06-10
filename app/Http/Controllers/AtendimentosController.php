@@ -6,6 +6,7 @@ use App\Models\Atendimentos;
 use App\Models\Medicos;
 use App\Models\Pacientes;
 use Illuminate\Http\Request;
+use App\Http\Requests\AtendimentosRequest;
 
 class AtendimentosController extends Controller
 {
@@ -35,18 +36,17 @@ class AtendimentosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AtendimentosRequest $request)
     {
-        $created = Atendimentos::create([
-            'data_atendimento'=> $request->input('data_atendimento'),
-            'medico_id'=> $request->input('medico_id'),
-            'paciente_id'=> $request->input('paciente_id'),
-        ]);
-
+        // Recupera os dados validados
+        $validatedData = $request->validated();
+        // Cria o atendimento usando os dados validados
+        $created = Atendimentos::create($validatedData);
+        // Verifica se a criação foi bem-sucedida e redireciona com a mensagem apropriada
         if ($created) {
-            return redirect()->route('atendimentos.index')->with('message',value: 'Criado com sucesso');
-        }
-        return redirect()->route('atendimentos.index')->with('message',value: 'Erro na criação');
+            return redirect()->route('atendimentos.index')->with('message', 'Criado com sucesso');
+        }        
+        return redirect()->route('atendimentos.index')->with('message', 'Erro na criação');
     }
 
 
@@ -73,14 +73,13 @@ class AtendimentosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AtendimentosRequest $request, string $id)
     {
-        $updated = Atendimentos::where('id', $id)->update([
-            'data_atendimento' => $request->input('data_atendimento'),
-            'medico_id' => $request->input('medico_id'),
-            'paciente_id' => $request->input('paciente_id'),
-        ]);
-    
+       // Recupera os dados validados
+       $validatedData = $request->validated();
+       // Encontra o atendimento pelo ID e atualiza com os dados validados
+       $updated = Atendimentos::where('id', $id)->update($validatedData);
+        // Verifica se a atualização foi bem-sucedida e redireciona com a mensagem apropriada
         if ($updated) {
             return redirect()->route('atendimentos.index')->with('message',value: 'Criado com sucesso');
         }

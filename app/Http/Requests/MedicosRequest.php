@@ -11,8 +11,9 @@ class MedicosRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
+
 
     /**
      * Get the validation rules that apply to the request.
@@ -28,6 +29,7 @@ class MedicosRequest extends FormRequest
         ];
     }
 
+    
      /**
      * Get the error messages for the defined validation rules.
      *
@@ -50,7 +52,7 @@ class MedicosRequest extends FormRequest
             ],
             
             'especialidade' => [
-                'alpha' => 'O campo nome deve conter apenas letras.',
+                'alpha' => 'O campo especialidade deve conter apenas letras.',
                 'string' => 'Deve conter texto',
                 'max' => 'O tamanho máximo da especialidade é 255 caracteres',
             ],
