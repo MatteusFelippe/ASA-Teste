@@ -25,5 +25,5 @@ class Pacientes extends Model
         return $this->hasMany(Atendimentos::class,'paciente_id');
     }
 
-    #use HasFactory;
+    use HasFactory;
 }

@@ -23,5 +23,5 @@ class Medicos extends Model
         return $this->hasMany(Atendimentos::class,'medico_id');
     }
 
-    #use HasFactory;
+    use HasFactory;
 }

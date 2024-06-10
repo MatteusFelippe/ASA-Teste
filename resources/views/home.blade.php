@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('content')
-
-<h2>Home<h2>
-
+<br>
+<h2>Sistema criado para o Teste Técnico para Desenvolvedor PHP/Laravel <h2>
+<br>
 @endsection

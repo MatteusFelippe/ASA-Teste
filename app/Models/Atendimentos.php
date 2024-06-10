@@ -28,5 +28,5 @@ class Atendimentos extends Model
         return $this->belongsTo(Medicos::class,'medico_id');
     }
 
-    #use HasFactory;
+    use HasFactory;
 }

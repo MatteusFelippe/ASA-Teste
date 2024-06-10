@@ -14,6 +14,7 @@ class PacientesRequest extends FormRequest
         return false;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,13 +24,14 @@ class PacientesRequest extends FormRequest
     {
         return [
             'nome' => ['required','string','alpha','max:255'],
-            'cpf' => ['required','integer','max:11','unique:pacientes'],
+            'cpf' => ['required','string','max:11','unique:pacientes'],
             'data_nascimento' => ['nullable','date','max:10'],
             'email' => ['required','email','max:255','unique:pacientes'],   
             //algumas pessoas não possuem email, mas como não tem outra forma de contato, coloquei como obrigatório 
         ];
     }
 
+    
     /**
      * Get the error messages for the defined validation rules.
      *
@@ -47,7 +49,6 @@ class PacientesRequest extends FormRequest
             'cpf' => [
                 'required' => 'O cpf é obrigatório',
                 'max' => 'O tamanho máximo do cpf é 11 caracteres',
-                'integer' => 'Deve conter somente números',
                 'unique' => 'Este cpf já está registrado',
             ],
             
