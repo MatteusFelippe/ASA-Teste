@@ -23,9 +23,9 @@ class MedicosRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => ['required','string','alpha','max:255'],
+            'nome' => ['required','string','regex:/^[a-zA-Z\s]+$/','max:255'],
             'crm' => ['required','string','regex:/^\d{1,6}-[A-Z]{2}$/','unique:medicos'],
-            'especialidade' => ['nullable','string','alpha','max:255'],
+            'especialidade' => ['nullable','string','regex:/^[a-zA-Z\s]+$/','max:255'],
         ];
     }
 
@@ -40,7 +40,7 @@ class MedicosRequest extends FormRequest
         return [
             'nome' => [
                 'required' => 'O nome é obrigatório',
-                'alpha' => 'O campo nome deve conter apenas letras.',
+                'regex' => 'O campo nome deve conter apenas letras.',
                 'string' => 'Deve conter texto',
                 'max' => 'O tamanho máximo do nome é 255 caracteres',
             ],
@@ -52,7 +52,7 @@ class MedicosRequest extends FormRequest
             ],
             
             'especialidade' => [
-                'alpha' => 'O campo especialidade deve conter apenas letras.',
+                'regex' => 'O campo especialidade deve conter apenas letras.',
                 'string' => 'Deve conter texto',
                 'max' => 'O tamanho máximo da especialidade é 255 caracteres',
             ],

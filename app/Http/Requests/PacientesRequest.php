@@ -23,7 +23,7 @@ class PacientesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => ['required','string','alpha','max:255'],
+            'nome' => ['required','string','regex:/^[a-zA-Z\s]+$/','max:255'],
             'cpf' => ['required','string','max:11','unique:pacientes','regex:/^\d{11}$/'],
             'data_nascimento' => ['nullable','date','max:10'],
             'email' => ['required','email','max:255','unique:pacientes'],   
@@ -41,7 +41,7 @@ class PacientesRequest extends FormRequest
     {
         return [
             'nome.required' => 'O nome é obrigatório',
-            'nome.alpha' => 'O campo nome deve conter apenas letras.',
+            'nome.regex' => 'O campo nome deve conter apenas letras.',
             'nome.max' => 'O tamanho máximo do nome é 255 caracteres',
         
             'cpf.required' => 'O cpf é obrigatório',
